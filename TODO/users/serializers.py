@@ -6,4 +6,3 @@ class UserModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = "__all__"
-        """ fields = ('email', 'user_name', 'first_name', 'last_name',) """
