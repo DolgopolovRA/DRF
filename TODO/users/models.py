@@ -10,3 +10,6 @@ class User(models.Model):
     class Meta:
         verbose_name = 'пользователь'
         verbose_name_plural = 'пользователи'
+
+    def __str__(self):
+        return self.user_name
