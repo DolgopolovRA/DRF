@@ -1,7 +1,6 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
 from rest_framework import serializers
 from .models import Project, ToDo
-from users.serializers import UserModelSerializer
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
@@ -13,7 +12,10 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
 
 
 class ToDoModelSerializer(HyperlinkedModelSerializer):
-  
+    project = serializers.CharField()
+    user = serializers.CharField()
+    is_active = serializers.CharField()
+
     class Meta:
         model = ToDo
         fields = "__all__"
