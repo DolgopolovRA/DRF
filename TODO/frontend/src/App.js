@@ -5,7 +5,7 @@ import axios from 'axios';
 import UserList from './components/User';
 import ProjectList from './components/Projects';
 import TodoList from './components/Todoes';
-import { BrowserRouter, Route, Link, withRouter } from 'react-router-dom'
+import { BrowserRouter, Route, Link,} from 'react-router-dom'
 
 class App extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class App extends React.Component {
   componentDidMount() {
     axios.get('http://127.0.0.1:8000/api/users')
       .then(response => {
-        const users = response.data
+        const users = response.data.results
         this.setState(
           {
             'users': users
@@ -30,7 +30,7 @@ class App extends React.Component {
 
     axios.get('http://127.0.0.1:8000/api/projects')
       .then(response => {
-        const projects = response.data
+        const projects = response.data.results
         this.setState(
           {
             'projects': projects
@@ -40,7 +40,7 @@ class App extends React.Component {
 
     axios.get('http://127.0.0.1:8000/api/todoes')
       .then(response => {
-        const todoes = response.data
+        const todoes = response.data.results
         this.setState(
           {
             'todoes': todoes

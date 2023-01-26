@@ -20,10 +20,7 @@ class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     filterset_class = ProjectFilter
-
-
-"""     pagination_class = ProjectLimitOffsetPagination
- """
+    pagination_class = ProjectLimitOffsetPagination
 
 
 class ToDoModelViewSet(ModelViewSet):
@@ -37,4 +34,4 @@ class ToDoModelViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoModelSerializer
     filterset_fields = ['project']
-    """ pagination_class = ToDoLimitOffsetPagination """
+    pagination_class = ToDoLimitOffsetPagination
