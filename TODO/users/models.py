@@ -6,6 +6,8 @@ class User(models.Model):
     user_name = models.CharField(verbose_name='Логин', max_length=55)
     first_name = models.CharField(verbose_name='Имя', max_length=55)
     last_name = models.CharField(verbose_name='Фамилия', max_length=55)
+    is_superuser = models.BooleanField(verbose_name='Администратор', default=False)
+    is_staff = models.BooleanField(verbose_name='Персрнал', default=False)
 
     class Meta:
         verbose_name = 'пользователь'
