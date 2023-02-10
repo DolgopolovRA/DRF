@@ -8,6 +8,8 @@ import TodoList from './components/Todoes';
 import LoginForm from './components/Auth';
 import { BrowserRouter, Route, Link, } from 'react-router-dom'
 import Cookies from 'universal-cookie';
+import ProjectForm from './components/ProjectForm';
+import TodosForm from './components/TodoesForm';
 
 class App extends React.Component {
   constructor(props) {
@@ -60,6 +62,45 @@ class App extends React.Component {
     return headers
   }
 
+  createProject(name, repo, users) {
+    const headers = this.get_headers()
+    const data = { name: name, repo: repo, users: users }
+    axios.post(`http://127.0.0.1:8000/api/projects/`, data, { headers })
+      .then(response => {
+        let new_project = response.data
+      })
+      .catch(error => console.log(error))
+  }
+
+  createTodoes(project, text, user, is_active) {
+    const headers = this.get_headers()
+    const data = { project: project, text: text, user: user, is_active: is_active }
+    axios.post(`http://127.0.0.1:8000/api/todoes/`, data, { headers })
+      .then(response => {
+        let new_todoes = response.data
+      })
+      .catch(error => console.log(error))
+  }
+
+  deleteProject(id) {
+    const headers = this.get_headers()
+    axios.delete(`http://127.0.0.1:8000/api/projects/${id}`, { headers })
+      .then(response => {
+        this.setState({
+          projects: this.state.projects.filter((project) => project.id !== id)
+        })
+      }).catch(error => console.log(error))
+  }
+
+  deleteToDo(id) {
+    const headers = this.get_headers()
+    axios.delete(`http://127.0.0.1:8000/api/todoes/${id}`, { headers })
+      .then(response => {
+        this.setState({
+          todoes: this.state.todoes.filter((todo) => todo.id !== id)
+        })
+      }).catch(error => console.log(error))
+  }
 
   load_data() {
     const headers = this.get_headers()
@@ -102,8 +143,8 @@ class App extends React.Component {
         console.log(error)
         this.setState({ todoes: [] })
       })
-  }
 
+  }
 
   componentDidMount() {
     this.get_token_from_storage()
@@ -131,8 +172,10 @@ class App extends React.Component {
             </ul>
           </nav>
           <Route exact path='/users' component={() => <UserList users={this.state.users} />} />
-          <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />} />
-          <Route exact path='/todoes' component={() => <TodoList todoes={this.state.todoes} />} />
+          <Route exact path='/projects/create' component={() => <ProjectForm createProject={(name, repo, users) => this.createProject(name, repo, users)} />} />
+          <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} deleteProject={(id) => this.deleteProject(id)} />} />
+          <Route exact path='/todoes/create' component={() => <TodosForm createTodoes={(project, text, user, is_active) => this.createTodoes(project, text, user, is_active)}/>} />
+          <Route exact path='/todoes' component={() => <TodoList todoes={this.state.todoes} deleteToDo={(id) => this.deleteToDo(id)} />} />
           <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} />
         </BrowserRouter>
       </div>
