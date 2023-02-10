@@ -4,6 +4,7 @@ from .models import Project, ToDo
 
 
 class ProjectModelSerializer(HyperlinkedModelSerializer):
+    id = serializers.CharField()
     users = serializers.StringRelatedField(many=True)
 
     class Meta:
@@ -12,6 +13,7 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
 
 
 class ToDoModelSerializer(HyperlinkedModelSerializer):
+    id = serializers.CharField()
     project = serializers.CharField()
     user = serializers.CharField()
     is_active = serializers.CharField()
